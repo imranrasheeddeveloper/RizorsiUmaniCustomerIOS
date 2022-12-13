@@ -46,8 +46,7 @@ struct LoginViewModel {
         return (text.count >= range.0) && (text.count <= range.1)
     }
 
-    func login(_ requestModel: LoginRequestModel, completion: @escaping (Result<UserResponseModel? , Error>) -> Void) {
-        let params = requestModel.getParams()
+    func login(_ params: [String: Any], completion: @escaping (Result<UserResponseModel? , Error>) -> Void) {
         print("Input:\(params)")
         APIService.sharedInstance.postRequest(loadinIndicator: false, urlString: Constants.URLs.baseUrl + Endpoint.shared.loginUrl, bodyData: params, completionBlock: {data,err in
             if err != nil{
@@ -85,16 +84,28 @@ struct LoginViewModel {
 }
 
 struct LoginRequestModel {
-    var email: String
+    var email: String?
     var password: String
+    var type: String
+    var phoneNumber: String?
 
-    init(email: String, password: String) {
+    init(email: String, password: String , type: String) {
         self.email = email
         self.password = password
+        self.type = type
+    }
+    init(phoneNumber: String, password: String, type: String) {
+        self.phoneNumber = phoneNumber
+        self.password = password
+        self.type = type
     }
 
-    func getParams() -> [String: Any] {
-        return ["email": email, "password": password]
+    func getParamsForEmail() -> [String: Any] {
+        return ["email": email!, "password": password , "type" : type , "fcm_token" : "123123"]
+    }
+    
+    func getParamsForPhoneNumber() -> [String: Any] {
+        return ["phone_number": phoneNumber!, "password": password , "type" : type , "fcm_token" : "123123"]
     }
 }
 
@@ -102,4 +113,37 @@ struct LoginRequestModel {
 struct ImageUpload: Codable {
     let success: Bool
     let filePATH, message: String
+}
+
+
+// MARK: - UserResponseModel
+struct UserResponseModel: Codable {
+    let success: Bool
+    let data: UserResponseModelDataClass
+    let token, message: String
+}
+
+// MARK: - UserResponseModelDataClass
+struct UserResponseModelDataClass: Codable {
+    let id: Int
+    let firstName, lastName, email, password: String
+    let phoneNumber, image, fcmToken, role: String
+    let stripeCustomerID, createdAt, updatedAt: String
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case firstName = "first_name"
+        case lastName = "last_name"
+        case email, password
+        case phoneNumber = "phone_number"
+        case image
+        case fcmToken = "fcm_token"
+        case role
+        case stripeCustomerID = "stripe_customerId"
+        case createdAt, updatedAt
+    }
+}
+struct ErrorModel: Codable {
+    let success: Bool
+    let message: String
 }

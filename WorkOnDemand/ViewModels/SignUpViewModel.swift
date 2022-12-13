@@ -161,34 +161,3 @@ struct SignUpModel {
     var password: String?
 }
 
-struct UserResponseModel: Codable {
-    let success: Bool
-    let data: UserResponseModelDataClass
-    let message: String
-}
-
-
-struct UserResponseModelDataClass: Codable {
-    let user: User?
-    let token: String?
-}
-
-
-struct User: Codable {
-    let id: Int
-    let firstName, lastName, username, email: String?
-    let password: String?
-    let profileImage: String?
-    let active: Bool?
-    let createdAt, updatedAt: String?
-    enum CodingKeys: String, CodingKey {
-        case id, firstName, lastName, username, email, password
-        case profileImage = "profile_image"
-        case active, createdAt, updatedAt
-    }
-}
-struct ErrorModel: Codable {
-    let success: Bool
-    let message: String
-}
-

@@ -15,7 +15,10 @@ extension UIViewController {
                 completion(title)
             }))
         }
-        self.present(controller, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.present(controller, animated: true, completion: nil)
+        }
+        
     }
 }
 extension NSDictionary{

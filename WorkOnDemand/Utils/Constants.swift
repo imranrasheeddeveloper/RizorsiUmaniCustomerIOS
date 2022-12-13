@@ -26,7 +26,7 @@ struct Constants {
     }
 
     struct URLs {
-        static let baseUrl = "http://192.168.100.3:3000"
+        static let baseUrl = "http://34.203.72.68:4000"
         static let sproductionUrl = "http://54.144.70.55:3000"
     }
 

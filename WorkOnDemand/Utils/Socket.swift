@@ -19,29 +19,29 @@ class SocketHelper {
     
     func connectSocket(completion: @escaping(Bool) -> () ) {
         let user = UserDefaults.standard.retrieve(object: UserResponseModel.self, fromKey: "UserProfile")
-        let id = user?.data.user?.id
-        socket.on(clientEvent: .connect) {(data, ack) in
-            print("socket connected")
-            self.socket.emit("online",id!)
-            completion(true)
-        }
-        socket.on(clientEvent: .error) { (data, ack) in
-            print(data)
-            completion(false)
-        }
-        socket.on(clientEvent: .error) { (data, ack) in
-            print(data)
-            completion(false)
-        }
-        socket.on(clientEvent: .error) { (data, ack) in
-            print(data)
-            completion(false)
-        }
-        self.socket.on("messageReceived", callback: { [self] data, ack in
-           // chatSocketDelegate?.socketMessageReceived()
-        })
-        
-        socket.connect()
+        //let id = user?.data.user?.id
+//        socket.on(clientEvent: .connect) {(data, ack) in
+//            print("socket connected")
+//            self.socket.emit("online",id!)
+//            completion(true)
+//        }
+//        socket.on(clientEvent: .error) { (data, ack) in
+//            print(data)
+//            completion(false)
+//        }
+//        socket.on(clientEvent: .error) { (data, ack) in
+//            print(data)
+//            completion(false)
+//        }
+//        socket.on(clientEvent: .error) { (data, ack) in
+//            print(data)
+//            completion(false)
+//        }
+//        self.socket.on("messageReceived", callback: { [self] data, ack in
+//           // chatSocketDelegate?.socketMessageReceived()
+//        })
+//
+//        socket.connect()
     }
     
     func disconnectSocket() {
@@ -51,11 +51,11 @@ class SocketHelper {
     }
     
     func sendMessage(_ toUser:Int) {
-        let user = UserDefaults.standard.retrieve(object: UserResponseModel.self, fromKey: "UserProfile")
-        if let id = user?.data.user?.id{
-            let payload = ["toUserId" : toUser , "fromUserId" : id]
-            self.socket.emit("new_message",payload)
-        }
+//        let user = UserDefaults.standard.retrieve(object: UserResponseModel.self, fromKey: "UserProfile")
+//        if let id = user?.data.user?.id{
+//            let payload = ["toUserId" : toUser , "fromUserId" : id]
+//            self.socket.emit("new_message",payload)
+//        }
     }
     
     

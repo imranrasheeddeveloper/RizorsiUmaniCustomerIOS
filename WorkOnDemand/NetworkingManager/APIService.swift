@@ -24,10 +24,10 @@ struct APIService {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         if isTokenRequierd{
             let obj = UserDefaults.standard.retrieve(object: UserResponseModel.self, fromKey: "UserProfile")
-            if let obj = obj?.data {
-                guard let token = obj.token else {return}
-                request.setValue( "Bearer \(token)", forHTTPHeaderField: "Authorization")
-            }
+            if let obj = UserDefaults.standard.retrieve(object: UserResponseModel.self, fromKey: "UserProfile"){
+                    request.setValue( "Bearer \(obj.token)", forHTTPHeaderField: "Authorization")
+                 }
+            
             
         }
             let task = session.dataTask(with: request) {
@@ -64,12 +64,9 @@ struct APIService {
         var request = URLRequest(url: requestUrl as URL, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 90)
         request.httpMethod = "POST"
        if isTokenRequierd{
-        let obj = UserDefaults.standard.retrieve(object: UserResponseModel.self, fromKey: "UserProfile")
-        if let obj = obj?.data {
-            guard let token = obj.token else {return}
-            request.setValue( "Bearer \(token)", forHTTPHeaderField: "Authorization")
+       if let obj = UserDefaults.standard.retrieve(object: UserResponseModel.self, fromKey: "UserProfile"){
+           request.setValue( "Bearer \(obj.token)", forHTTPHeaderField: "Authorization")
         }
-        
     }
         let postString = self.getPostString(params: bodyData)
         request.httpBody = postString.data(using: .utf8)

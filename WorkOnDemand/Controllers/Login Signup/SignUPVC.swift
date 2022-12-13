@@ -15,7 +15,6 @@ class SignUPVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var userNameTF : UITextField!
     @IBOutlet weak var passwordTF : UITextField!
     @IBOutlet weak var signupBtn: UIButton!
-    @IBOutlet weak var loginLbl : UILabel!
     @IBOutlet weak var termsAndPrivacyLabel : UILabel!
     var viewModel = SignUpViewModel()
 
@@ -37,8 +36,6 @@ class SignUPVC: UIViewController, UITextFieldDelegate {
         emailTF.delegate = self
         passwordTF.delegate = self
         signupBtn.roundview(13)
-        let tap = UITapGestureRecognizer(target: self, action:#selector(redirectToLogin))
-        loginLbl.addGestureRecognizer(tap)
         
         termsAndPrivacyLabel.isUserInteractionEnabled = true
         termsAndPrivacyLabel.lineBreakMode = .byWordWrapping
